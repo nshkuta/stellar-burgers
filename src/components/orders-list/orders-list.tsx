@@ -1,12 +1,18 @@
 import { FC, memo } from 'react';
 
 import { OrdersListProps } from './type';
-import { OrdersListUI } from '@ui';
+import { OrdersListUI, Preloader } from '@ui';
+import { useSelector } from '../../services/store';
+import { selectLoading } from '../../services/slices/stellarBurgerSlice';
 
 export const OrdersList: FC<OrdersListProps> = memo(({ orders }) => {
   const orderByDate = [...orders].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
+
+  const loading = useSelector(selectLoading);
+
+  if (loading) return <Preloader />;
 
   return <OrdersListUI orderByDate={orderByDate} />;
 });
