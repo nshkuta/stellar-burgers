@@ -2,7 +2,6 @@ import { FC, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
 import { useSelector } from '../../services/store';
-import { selectIngredients } from '../../services/slices/stellarBurgerSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const IngredientDetails: FC = () => {
@@ -15,7 +14,7 @@ export const IngredientDetails: FC = () => {
     }
   }, []);
 
-  const ingredients = useSelector(selectIngredients);
+  const ingredients = useSelector((state) => state.const).ingredients;
   const ingredientData = ingredients.find((item) => item._id === params.id);
 
   if (!ingredientData) {

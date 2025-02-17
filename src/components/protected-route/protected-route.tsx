@@ -1,7 +1,6 @@
 import { Preloader } from '@ui';
 import { useSelector } from '../../services/store';
 import { Navigate, useLocation } from 'react-router-dom';
-import { selectIsAuthenticated } from '../../services/slices/stellarBurgerSlice';
 
 type ProtectedRouteProps = {
   children: React.ReactElement;
@@ -12,7 +11,7 @@ export const ProtectedRoute = ({
   children,
   forNotAuth: forNotAuth
 }: ProtectedRouteProps) => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isAuthenticated = useSelector((state) => state.user).isAuthenticated;
   const location = useLocation();
 
   if (!forNotAuth && !isAuthenticated) {

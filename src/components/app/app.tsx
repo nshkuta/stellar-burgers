@@ -14,24 +14,24 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { useEffect } from 'react';
-import {
-  getIngredients,
-  getOrders,
-  getUser,
-  selectIngredients,
-  selectIsAuthenticated,
-  selectOrders
-} from '../../services/slices/stellarBurgerSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { getCookie } from '../../utils/cookie';
+import { getUser } from '../../services/slices/userSlice';
+import { getIngredients } from '../../services/slices/constructorSlice';
+import { getOrders } from '../../services/slices/ordersSlice';
 
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const ingredients = useSelector(selectIngredients);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const orders = useSelector(selectOrders);
+
+  const constructorSelector = useSelector((state) => state.const);
+  const userSelector = useSelector((state) => state.user);
+  const ordersSelector = useSelector((state) => state.orders);
+
+  const ingredients = constructorSelector.ingredients;
+  const isAuthenticated = userSelector.isAuthenticated;
+  const orders = ordersSelector.orders;
 
   const location = useLocation();
   const token = getCookie('accessToken');

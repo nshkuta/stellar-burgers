@@ -1,23 +1,18 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
-import {
-  getUser,
-  registerUser,
-  selectError,
-  selectLoading
-} from '../../services/slices/stellarBurgerSlice';
-import { useForm } from 'src/hooks/useForm';
 import { Preloader } from '@ui';
 import { setCookie } from '../../utils/cookie';
+import { getUser, registerUser } from '../../services/slices/userSlice';
 
 export const Register: FC = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
+
+  const userSelector = useSelector((state) => state.user);
+  const loading = userSelector.loading;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();

@@ -4,10 +4,6 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector } from '../../services/store';
 import { redirect, useParams } from 'react-router-dom';
-import {
-  selectIngredients,
-  selectOrders
-} from '../../services/slices/stellarBurgerSlice';
 
 export const OrderInfo: FC = () => {
   const params = useParams<{ number: string }>();
@@ -16,12 +12,15 @@ export const OrderInfo: FC = () => {
     return null;
   }
 
+  const ordersSelector = useSelector((state) => state.orders);
+  const constructorSelector = useSelector((state) => state.const);
+
   const number = parseInt(params.number);
-  const orders = useSelector(selectOrders);
+  const orders = ordersSelector.orders;
   /** TODO: взять переменные orderData и ingredients из стора */
   const orderData = orders.find((item) => item.number === number);
 
-  const ingredients = useSelector(selectIngredients);
+  const ingredients = constructorSelector.ingredients;
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {

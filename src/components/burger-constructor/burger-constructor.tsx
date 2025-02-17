@@ -2,27 +2,24 @@ import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
+import { useNavigate } from 'react-router-dom';
 import {
   closeOrderModal,
-  newOrder,
-  selectConstructorItems,
-  selectIsAuthenticated,
-  selectOrderModalData,
-  selectOrderRequest
-} from '../../services/slices/stellarBurgerSlice';
-import { useNavigate } from 'react-router-dom';
+  newOrder
+} from '../../services/slices/constructorSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(selectIsAuthenticated);
 
-  const constructorItems = useSelector(selectConstructorItems);
+  const userSelector = useSelector((state) => state.user);
+  const constructorSelector = useSelector((state) => state.const);
 
-  const orderRequest = useSelector(selectOrderRequest);
-
-  const orderModalData = useSelector(selectOrderModalData);
+  const isAuthenticated = userSelector.isAuthenticated;
+  const constructorItems = constructorSelector.constructorItems;
+  const orderRequest = constructorSelector.orderRequest;
+  const orderModalData = constructorSelector.orderModalData;
 
   const onOrderClick = () => {
     if (!isAuthenticated) {

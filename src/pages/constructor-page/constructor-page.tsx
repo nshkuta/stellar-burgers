@@ -8,8 +8,9 @@ import { Preloader } from '../../components/ui';
 import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const constructorSlice = useSelector((store) => store.const);
+
+  const isIngredientsLoading = constructorSlice.loading;
 
   return (
     <>
