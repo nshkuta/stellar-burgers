@@ -14,7 +14,7 @@ type TOrdersState = {
   userOrders: TOrder[] | null;
 };
 
-const initialState: TOrdersState = {
+export const initialState: TOrdersState = {
   loading: false,
   error: null,
   orders: [],
@@ -33,8 +33,9 @@ export const ordersSlice = createSlice({
       .addCase(getFeeds.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getFeeds.rejected, (state) => {
+      .addCase(getFeeds.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(getFeeds.fulfilled, (state, action) => {
         state.loading = false;
@@ -45,8 +46,9 @@ export const ordersSlice = createSlice({
       .addCase(getOrders.pending, (state) => {
         state.loading = true;
       })
-      .addCase(getOrders.rejected, (state) => {
+      .addCase(getOrders.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(getOrders.fulfilled, (state, action) => {
         state.loading = false;
@@ -54,3 +56,5 @@ export const ordersSlice = createSlice({
       });
   }
 });
+
+export const ordersSliceReducer = ordersSlice.reducer;

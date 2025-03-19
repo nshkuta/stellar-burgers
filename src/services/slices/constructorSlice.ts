@@ -17,7 +17,7 @@ export const newOrder = createAsyncThunk(
   async (data: string[]) => orderBurgerApi(data)
 );
 
-type TConstructorState = {
+export type TConstructorState = {
   ingredients: Array<TIngredient>;
   constructorItems: TConstructorItems;
   loading: boolean;
@@ -26,7 +26,7 @@ type TConstructorState = {
   orderRequest: boolean;
 };
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
   ingredients: [],
   constructorItems: {
     bun: {
@@ -112,6 +112,7 @@ export const constructorSlice = createSlice({
       })
       .addCase(newOrder.rejected, (state, action) => {
         state.orderRequest = false;
+        state.error = action.error.message;
       })
       .addCase(newOrder.fulfilled, (state, action) => {
         state.orderModalData = action.payload.order;
@@ -128,3 +129,5 @@ export const {
   moveIngredientDown,
   closeOrderModal
 } = constructorSlice.actions;
+
+export const constructorSliceReducer = constructorSlice.reducer;

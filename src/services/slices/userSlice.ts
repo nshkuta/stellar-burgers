@@ -36,7 +36,7 @@ type TUserState = {
   user: TUser;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   loading: false,
   error: null,
   isAuthenticated: false,
@@ -117,3 +117,5 @@ export const userSlice = createSlice({
       });
   }
 });
+
+export const userSliceReducer = userSlice.reducer;
